@@ -1,0 +1,25 @@
+<h1>{{ page }}: {{ item }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<ul>
+    {% for entry in entries %}
+        <li>
+            {{ entry.request.url }}
+            <ul>
+                <li>Status: {{ entry.response.status }}</li>
+                <li>Size: {{ entry.response.content.size }}</li>
+                <li>
+                    Time: {{ entry.time }}
+                    <ul>
+                        <li>Blocked: {{ entry.timings.blocked}}</li>
+                        <li>Send: {{ entry.timings.send}}</li>
+                        <li>Wait: {{ entry.timings.wait}}</li>
+                        <li>Receive: {{ entry.timings.receive}}</li>
+                    </ul>
+                </li>
+                
+            </ul>
+        </li>
+    {% endfor %}
+</ul>

@@ -1,25 +1,31 @@
-<h1>{{ page }}: {{ item }}</h1>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/imperavi-kube@6.5.2/dist/css/kube.min.css">
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<div style="padding: 1rem;">
+    <h2>Performance Data for {{ page }}</h2>
+    <h3>{{ item }}</h3>
 
-<ul>
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+    <a class="button is-secondary is-small" href="{{ request.path }}">Default order</a>
+    <a class="button is-secondary is-small" href="{{ request.path }}?order_by=time">Order by time to load</a>
+    <a class="button is-secondary is-small" href="{{ request.path }}?order_by=size">Order by file size</a>
+
+    <br /><br />
+
     {% for entry in entries %}
-        <li>
-            {{ entry.request.url }}
-            <ul>
-                <li>Status: {{ entry.response.status }}</li>
-                <li>Size: {{ entry.response.content.size }}</li>
-                <li>
-                    Time: {{ entry.time }}
-                    <ul>
-                        <li>Blocked: {{ entry.timings.blocked}}</li>
-                        <li>Send: {{ entry.timings.send}}</li>
-                        <li>Wait: {{ entry.timings.wait}}</li>
-                        <li>Receive: {{ entry.timings.receive}}</li>
-                    </ul>
-                </li>
-                
-            </ul>
-        </li>
+        <strong>{{ entry.request.url }}</strong>
+        <dl>
+            <dd>Status: {{ entry.response.status }}</dd>
+            <dd>Size: {{ entry.response.content.size }}</dd>
+            <dd>
+                Time: {{ entry.time }}
+                <dl>
+                    <dd>Blocked: {{ entry.timings.blocked}}</dd>
+                    <dd>Send: {{ entry.timings.send}}</dd>
+                    <dd>Wait: {{ entry.timings.wait}}</dd>
+                    <dd>Receive: {{ entry.timings.receive}}</dd>
+                </dl>
+            </dd>
+        </dl>
     {% endfor %}
-</ul>
+</div>
